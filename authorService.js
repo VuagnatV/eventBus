@@ -1,6 +1,14 @@
 import { authors } from "./author.js";
 
+import { books } from "./book.js";
+import EventBus from "./eventBus.js";
+
+EventBus.subscribe("deleteAuthor", (data) => {
+  books.find((book) => book.authorId === data).authorId = null
+})
+
 export const authorService = {
+
   getAllAuthors: () => {
     return authors;
   },
@@ -28,9 +36,11 @@ export const authorService = {
   },
 
   deleteAuthor: (id) => {
+
     const index = authors.findIndex((author) => author.id === id);
     if (index !== -1) {
       authors.splice(index, 1);
+      EventBus.publish("delete", id)
       return true;
     }
     return false;

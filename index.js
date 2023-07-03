@@ -14,6 +14,12 @@ app.get("/authors", (req, res) => {
   res.send(JSON.stringify(allAuthors));
 });
 
+app.delete("/authors/:id", (req, res) => {
+  const authorId = parseInt(req.params.id);
+  authorService.deleteAuthor(authorId)
+  res.send(JSON.stringify(bookService.getAllBooks()))
+})
+
 app.get("/authors/:id", (req, res) => {
   const authorId = parseInt(req.params.id);
   const author = authorService.getAuthorById(authorId);
@@ -67,6 +73,12 @@ app.get("/categories", (req, res) => {
   const allCategories = categoryService.getAllCategories();
   res.send(JSON.stringify(allCategories));
 });
+
+app.delete("/categories/:id", (req, res) => {
+  const categoryId = parseInt(req.params.id);
+  categoryService.deleteCategory(categoryId)
+  res.send(JSON.stringify(bookService.getAllBooks()))
+})
 
 app.get("/categories/:id", (req, res) => {
   const categoryId = parseInt(req.params.id);
